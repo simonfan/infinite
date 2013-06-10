@@ -39,5 +39,7 @@ function(  $    , Backbone , Infinite ) {
 				text: $el.html()
 			};
 		},
+
+		triggerDis: 1,
 	});
 });
