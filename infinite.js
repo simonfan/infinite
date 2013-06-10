@@ -40,7 +40,7 @@ function(   $   , Backbone , undef      , undef      ) {
 			this.datasource = options.datasource || {};
 
 			// trigger distance
-			this.triggerdistance = options.triggerdistance || 200	;
+			this.triggerdistance = options.triggerdistance || 200;
 
 			// collection
 			if (!options.collection) {
