@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+	
+	<title>Module boilerplate</title>
+	
+	<!-- Set a script tag to define unit as FALSE, so that the demo page is run -->
+	<script type="text/javascript">
+		window.__unit = false;
+		window.__demo = true;
+	</script>
+
+	<script type="text/javascript" data-main="main.js" src="components/requirejs/require.js"></script>
+
+	<style type="text/css">
+		#infinite-frame {
+			height: 500px;
+			overflow: auto;
+		}
+
+
+		#infinite .infinite-list {
+			border-collapse: collapse;
+			
+			border: none;
+		}
+
+	</style>
+	
+</head>
+
+<body>
+
+	<div id="infinite-frame">
+		<ul id="infinite">
+			<li id="test">Test tweet</li>
+			<li id="test-2">Test second</li>
+		</ul>
+	</div>
+	<br>
+	<a href="tests.html">Go to unit tests</a>
+	
+</body>
+
+</html>
