@@ -26,7 +26,7 @@ function(   $   , Backbone , undef      , undef      ) {
 
 					itemHtmlParser: ['function','undefined'],
 
-					triggerDis: ['number', 'undefined']
+					triggerdistance: ['number', 'undefined']
 				}
 			});
 
@@ -40,7 +40,7 @@ function(   $   , Backbone , undef      , undef      ) {
 			this.datasource = options.datasource || {};
 
 			// trigger distance
-			this.triggerDis = options.triggerDis || 200;
+			this.triggerdistance = options.triggerdistance || 200	;
 
 			// collection
 			if (!options.collection) {
@@ -150,7 +150,7 @@ function(   $   , Backbone , undef      , undef      ) {
 			console.log('scrolled:' + scrolled);
 			console.log('bottom:' + bottom);
 */
-			if (bottom < this.triggerDis) {
+			if (bottom < this.triggerdistance) {
 				this.trigger('near-bottom');
 
 				this.request();
