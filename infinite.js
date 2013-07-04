@@ -2,10 +2,6 @@ define(['jquery','backbone','underscore','_.mixins'],
 function(   $   , Backbone , undef      , undef      ) {
 
 	Backbone.Infinite = Backbone.View.extend({
-
-		defaults: {
-		},
-
 		tagName: 'ul',
 		className: 'infinite-list',
 
@@ -13,14 +9,17 @@ function(   $   , Backbone , undef      , undef      ) {
 			_.interface(options, {
 				id: 'Backbone.Infinite View initialize',
 				typeofs: {
-					itemtemplate: ['function', 'undefined'],
+					item: {
+						view: ['function','undefined'],
+						template: ['function','undefined']
+					},
 
-					collection: ['object','undefined'],
+					collection: ['function','object','undefined'],
 					url: ['string','undefined'],
 					datasource: ['object', 'undefined'],
 
 					$frame: ['object','undefined'],
-					el: 'object',
+					$el: ['object','undefined'],
 
 					initialpage: ['number','undefined'],
 
@@ -33,24 +32,30 @@ function(   $   , Backbone , undef      , undef      ) {
 			_.bindAll(this);
 
 			// item
-			this.itemtemplate = options.itemtemplate || this.defaults.itemtemplate;
+			this.item = options.item;
 			this.itemHtmlParser = options.itemHtmlParser;
 
 			// datasource
-			this.datasource = options.datasource || this.defaults.datasource || {};
+			this.datasource = options.datasource || {};
 
 			// trigger distance
-			this.triggerdistance = options.triggerdistance || this.defaults.triggerdistance || 200;
+			this.triggerdistance = options.triggerdistance || 200;
 
 			// collection
-			this.collection = options.collection || this.defaults.collection || Backbone.Collection;
-			this.collection = typeof this.collection === 'object' ? this.collection : new this.collection();
+			if (!options.collection) {
+				this.collection = new Backbone.Collection([], {
+					model: Backbone.Model,
+					url: options.url
+				});
+			} else {
+				this.collection = typeof options.collection === 'object' ? options.collection : new options.collection();
+			}
 
 			// frame and container
-			this.$frame = options.$frame || this.defaults.$frame || $(window);
+			this.$frame = options.$frame || $(window);
 
 			// paging
-			this.page = options.initialpage || this.defaults.initialpage || 1;
+			this.page = options.initialpage || 1;
 
 			this._build();
 
@@ -108,7 +113,10 @@ function(   $   , Backbone , undef      , undef      ) {
 		_buildUl: function() {
 			this.$clearfix = $('<li class="clearfix" style="float: none; clear: both; height: 0; overflow: hidden;"></li>');
 
-			this.$el.append(this.$clearfix);
+			// append the list to the frame object
+			this.$el
+				.append(this.$clearfix)
+				.appendTo(this.$frame);
 		},
 
 		_setupEvents: function() {
@@ -123,7 +131,7 @@ function(   $   , Backbone , undef      , undef      ) {
 
 		// builds item view and adds to display
 		_add: function(model) {
-			var item = this.itemtemplate( model.attributes );
+			var item = this.item.view ? new this.item.view({ model: model }).el : this.item.template( model.attributes );
 
 			$(item).insertBefore(this.$clearfix);
 		},
@@ -163,6 +171,10 @@ function(   $   , Backbone , undef      , undef      ) {
 		},
 
 		_requestDone: function(data, textStatus, jqXHR) {
+
+			// change the request status
+			this.isLoading = false;
+
 			this._fillUpFrame();	
 			this.page += 1;
 
@@ -174,8 +186,6 @@ function(   $   , Backbone , undef      , undef      ) {
 		},
 
 		_requestAlways: function(data_jqXHR, textStatus, jqXHR_errorThrown) {
-
-			this.isLoading = false;
 			this.trigger('request-always', data_jqXHR, textStatus, jqXHR_errorThrown);
 		},
 
