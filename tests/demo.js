@@ -17,8 +17,10 @@ function(  $    , Backbone , Infinite ) {
 
 	window.tweets = new Tweets();
 	window.infinite = new Backbone.Infinite({
-		itemtemplate: function(tweet) {
-			return '<li>' + tweet.text + '</li>';
+		item: {
+			template: function(tweet) {
+				return '<li>' + tweet.text + '</li>';
+			}
 		},
 		collection: tweets,
 		datasource: {
@@ -40,8 +42,4 @@ function(  $    , Backbone , Infinite ) {
 
 		triggerDis: 1,
 	});
-
-
-
-	tweets.add({ text: 'lalalalala' });
 });

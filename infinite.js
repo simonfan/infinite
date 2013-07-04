@@ -16,7 +16,7 @@ function(   $   , Backbone , undef      , undef      ) {
 
 					collection: ['function','object','undefined'],
 					url: ['string','undefined'],
-					datasource: ['object', 'undefined'],
+					datasource: ['object', 'function', 'undefined'],
 
 					$frame: ['object','undefined'],
 					$el: ['object','undefined'],
