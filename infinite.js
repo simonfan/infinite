@@ -2,21 +2,33 @@ define(['jquery','backbone','underscore','_.mixins'],
 function(   $   , Backbone , undef      , undef      ) {
 
 	Backbone.Infinite = Backbone.View.extend({
+
+		defaults: {
+			triggerdistance: 200,
+			collection: Backbone.Collection,
+			datasource: {},
+			$frame: $(window),
+			initialpage: 1,
+		},
+
 		tagName: 'ul',
 		className: 'infinite-list',
 
 		initialize: function(options) {
+
+			_.defaults(options, this.defaults);
+
 			_.interface(options, {
 				id: 'Backbone.Infinite View initialize',
 				typeofs: {
 					itemtemplate: ['function', 'undefined'],
 
-					collection: ['function','object','undefined'],
+					collection: ['object','undefined'],
 					url: ['string','undefined'],
 					datasource: ['object', 'undefined'],
 
 					$frame: ['object','undefined'],
-					$el: ['object','undefined'],
+					el: 'object',
 
 					initialpage: ['number','undefined'],
 
@@ -29,30 +41,24 @@ function(   $   , Backbone , undef      , undef      ) {
 			_.bindAll(this);
 
 			// item
-			this.itemtemplate = options.itemtemplate || this.itemtemplate;
+			this.itemtemplate = options.itemtemplate;
 			this.itemHtmlParser = options.itemHtmlParser;
 
 			// datasource
-			this.datasource = options.datasource || {};
+			this.datasource = options.datasource;
 
 			// trigger distance
-			this.triggerdistance = options.triggerdistance || 200;
+			this.triggerdistance = options.triggerdistance;
 
 			// collection
-			if (!options.collection) {
-				this.collection = new Backbone.Collection([], {
-					model: Backbone.Model,
-					url: options.url
-				});
-			} else {
-				this.collection = typeof options.collection === 'object' ? options.collection : new options.collection();
-			}
+			this.collection = options.collection;
+			this.collection = typeof this.collection === 'object' ? this.collection : new this.collection();
 
 			// frame and container
-			this.$frame = options.$frame || $(window);
+			this.$frame = options.$frame;
 
 			// paging
-			this.page = options.initialpage || 1;
+			this.page = options.initialpage;
 
 			this._build();
 
