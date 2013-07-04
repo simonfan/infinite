@@ -108,10 +108,7 @@ function(   $   , Backbone , undef      , undef      ) {
 		_buildUl: function() {
 			this.$clearfix = $('<li class="clearfix" style="float: none; clear: both; height: 0; overflow: hidden;"></li>');
 
-			// append the list to the frame object
-			this.$el
-				.append(this.$clearfix)
-				.appendTo(this.$frame);
+			this.$el.append(this.$clearfix);
 		},
 
 		_setupEvents: function() {
