@@ -6,9 +6,8 @@ function(   $   , Backbone , undef      , undef      ) {
 		className: 'infinite-list',
 
 		initialize: function(options) {
-			_.interface({
+			_.interface(options, {
 				id: 'Backbone.Infinite View initialize',
-				obj: options,
 				typeofs: {
 					item: {
 						view: ['function','undefined'],
@@ -172,10 +171,6 @@ function(   $   , Backbone , undef      , undef      ) {
 		},
 
 		_requestDone: function(data, textStatus, jqXHR) {
-
-			// change the request status
-			this.isLoading = false;
-
 			this._fillUpFrame();	
 			this.page += 1;
 
@@ -183,11 +178,12 @@ function(   $   , Backbone , undef      , undef      ) {
 		},
 
 		_requestFail: function(jqXHR, textStatus, errorThrown) {
-
 			this.trigger('request-fail', jqXHR, textStatus, errorThrown);
 		},
 
 		_requestAlways: function(data_jqXHR, textStatus, jqXHR_errorThrown) {
+
+			this.isLoading = false;
 			this.trigger('request-always', data_jqXHR, textStatus, jqXHR_errorThrown);
 		},
 
