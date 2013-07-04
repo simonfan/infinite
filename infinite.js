@@ -4,11 +4,6 @@ function(   $   , Backbone , undef      , undef      ) {
 	Backbone.Infinite = Backbone.View.extend({
 
 		defaults: {
-			triggerdistance: 200,
-			collection: Backbone.Collection,
-			datasource: {},
-			$frame: $(window),
-			initialpage: 1,
 		},
 
 		tagName: 'ul',
@@ -42,20 +37,20 @@ function(   $   , Backbone , undef      , undef      ) {
 			this.itemHtmlParser = options.itemHtmlParser;
 
 			// datasource
-			this.datasource = options.datasource || this.defaults.datasource;
+			this.datasource = options.datasource || this.defaults.datasource || {};
 
 			// trigger distance
-			this.triggerdistance = options.triggerdistance || this.defaults.triggerdistance;
+			this.triggerdistance = options.triggerdistance || this.defaults.triggerdistance || 200;
 
 			// collection
-			this.collection = options.collection || this.defaults.collection;
+			this.collection = options.collection || this.defaults.collection || Backbone.Collection;
 			this.collection = typeof this.collection === 'object' ? this.collection : new this.collection();
 
 			// frame and container
-			this.$frame = options.$frame || this.defaults.$frame;
+			this.$frame = options.$frame || this.defaults.$frame || $(window);
 
 			// paging
-			this.page = options.initialpage || this.defaults.initialpage;
+			this.page = options.initialpage || this.defaults.initialpage || 1;
 
 			this._build();
 
