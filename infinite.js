@@ -40,6 +40,10 @@ function(   $   , Backbone , undef      , undef      ) {
 
 			_.bindAll(this);
 
+
+			// save options
+			this.options = options;
+
 			// item
 			this.itemtemplate = options.itemtemplate;
 			this.itemHtmlParser = options.itemHtmlParser;
