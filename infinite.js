@@ -15,9 +15,6 @@ function(   $   , Backbone , undef      , undef      ) {
 		className: 'infinite-list',
 
 		initialize: function(options) {
-
-			_.defaults(options, this.defaults);
-
 			_.interface(options, {
 				id: 'Backbone.Infinite View initialize',
 				typeofs: {
@@ -40,29 +37,25 @@ function(   $   , Backbone , undef      , undef      ) {
 
 			_.bindAll(this);
 
-
-			// save options
-			this.options = options;
-
 			// item
-			this.itemtemplate = options.itemtemplate;
+			this.itemtemplate = options.itemtemplate || this.defaults.itemtemplate;
 			this.itemHtmlParser = options.itemHtmlParser;
 
 			// datasource
-			this.datasource = options.datasource;
+			this.datasource = options.datasource || this.defaults.datasource;
 
 			// trigger distance
-			this.triggerdistance = options.triggerdistance;
+			this.triggerdistance = options.triggerdistance || this.defaults.triggerdistance;
 
 			// collection
-			this.collection = options.collection;
+			this.collection = options.collection || this.defaults.collection;
 			this.collection = typeof this.collection === 'object' ? this.collection : new this.collection();
 
 			// frame and container
-			this.$frame = options.$frame;
+			this.$frame = options.$frame || this.defaults.$frame;
 
 			// paging
-			this.page = options.initialpage;
+			this.page = options.initialpage || this.defaults.initialpage;
 
 			this._build();
 
