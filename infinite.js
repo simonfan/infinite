@@ -9,10 +9,7 @@ function(   $   , Backbone , undef      , undef      ) {
 			_.interface(options, {
 				id: 'Backbone.Infinite View initialize',
 				typeofs: {
-					item: {
-						view: ['function','undefined'],
-						template: ['function','undefined']
-					},
+					itemtemplate: ['function', 'undefined'],
 
 					collection: ['function','object','undefined'],
 					url: ['string','undefined'],
@@ -32,7 +29,7 @@ function(   $   , Backbone , undef      , undef      ) {
 			_.bindAll(this);
 
 			// item
-			this.item = options.item;
+			this.itemtemplate = options.itemtemplate || this.itemtemplate;
 			this.itemHtmlParser = options.itemHtmlParser;
 
 			// datasource
@@ -131,7 +128,7 @@ function(   $   , Backbone , undef      , undef      ) {
 
 		// builds item view and adds to display
 		_add: function(model) {
-			var item = this.item.view ? new this.item.view({ model: model }).el : this.item.template( model.attributes );
+			var item = this.itemtemplate( model.attributes );
 
 			$(item).insertBefore(this.$clearfix);
 		},
